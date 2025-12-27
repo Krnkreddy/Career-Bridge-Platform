@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { UserButton } from "@clerk/nextjs";
 import JobFeed from "../../components/JobFeed";
 
@@ -19,10 +20,11 @@ export default function Dashboard() {
                         <h3 className="font-semibold text-slate-500 mb-2">Applications</h3>
                         <p className="text-3xl font-bold">3</p>
                     </div>
-                    <div className="bg-white p-6 rounded-xl shadow-sm border">
+                    <Link href="/profile" className="bg-white p-6 rounded-xl shadow-sm border block hover:border-blue-500 transition">
                         <h3 className="font-semibold text-slate-500 mb-2">Profile View</h3>
                         <p className="text-3xl font-bold">56</p>
-                    </div>
+                        <span className="text-sm text-blue-600 font-medium">Edit Profile →</span>
+                    </Link>
                 </div>
 
                 <div className="mt-8">

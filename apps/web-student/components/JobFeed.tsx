@@ -8,20 +8,42 @@ import ApplyButton from "./ApplyButton";
 export default function JobFeed() {
     const [jobs, setJobs] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    const [search, setSearch] = useState("");
 
-    useEffect(() => {
-        // Public endpoint for now, or authenticated
-        axios.get("http://localhost:3001/jobs")
+    const fetchJobs = (query = "") => {
+        setLoading(true);
+        axios.get(`http://localhost:3001/jobs${query ? `?search=${query}` : ''}`)
             .then(res => setJobs(res.data))
             .catch(err => console.error(err))
             .finally(() => setLoading(false));
+    };
+
+    useEffect(() => {
+        fetchJobs();
     }, []);
 
-    if (loading) return <div className="p-8 text-center">Loading jobs...</div>;
+    const handleSearch = (e: React.FormEvent) => {
+        e.preventDefault();
+        fetchJobs(search);
+    };
 
     return (
-        <div className="space-y-4">
-            {jobs.map(job => (
+        <div className="space-y-6">
+            <form onSubmit={handleSearch} className="flex gap-2">
+                <input
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder="Search by title, company..."
+                    className="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+                <button type="submit" className="bg-slate-900 text-white px-6 py-2 rounded-lg font-bold hover:bg-slate-800 transition">
+                    Search
+                </button>
+            </form>
+
+            {loading && <div className="p-8 text-center">Loading jobs...</div>}
+
+            {!loading && jobs.map(job => (
                 <div key={job.id} className="bg-white p-6 rounded-xl border border-slate-200 hover:shadow-md transition">
                     <div className="flex justify-between items-start">
                         <div>
