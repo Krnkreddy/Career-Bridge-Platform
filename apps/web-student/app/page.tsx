@@ -1,102 +1,72 @@
-import Image, { type ImageProps } from "next/image";
-import { Button } from "@repo/ui/button";
-import styles from "./page.module.css";
 
-type Props = Omit<ImageProps, "src"> & {
-  srcLight: string;
-  srcDark: string;
-};
-
-const ThemeImage = (props: Props) => {
-  const { srcLight, srcDark, ...rest } = props;
-
-  return (
-    <>
-      <Image {...rest} src={srcLight} className="imgLight" />
-      <Image {...rest} src={srcDark} className="imgDark" />
-    </>
-  );
-};
+import Link from 'next/link';
+import { ArrowRight, CheckCircle, GraduationCap } from 'lucide-react';
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <ThemeImage
-          className={styles.logo}
-          srcLight="turborepo-dark.svg"
-          srcDark="turborepo-light.svg"
-          alt="Turborepo logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>apps/web/app/page.tsx</code>
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new/clone?demo-description=Learn+to+implement+a+monorepo+with+a+two+Next.js+sites+that+has+installed+three+local+packages.&demo-image=%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F4K8ZISWAzJ8X1504ca0zmC%2F0b21a1c6246add355e55816278ef54bc%2FBasic.png&demo-title=Monorepo+with+Turborepo&demo-url=https%3A%2F%2Fexamples-basic-web.vercel.sh%2F&from=templates&project-name=Monorepo+with+Turborepo&repository-name=monorepo-turborepo&repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fturborepo%2Ftree%2Fmain%2Fexamples%2Fbasic&root-directory=apps%2Fdocs&skippable-integrations=1&teamSlug=vercel&utm_source=create-turbo"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://turborepo.com/docs?utm_source"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen bg-white">
+      {/* Navbar */}
+      <nav className="border-b bg-white/50 backdrop-blur-md sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <GraduationCap className="h-8 w-8 text-blue-600" />
+            <span className="font-bold text-xl tracking-tight text-slate-900">CareerLink</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <Link href="/sign-in" className="text-slate-600 hover:text-slate-900 font-medium">Log in</Link>
+            <Link href="/sign-up" className="bg-blue-600 text-white px-4 py-2 rounded-full font-medium hover:bg-blue-700 transition-colors">
+              Get Started
+            </Link>
+          </div>
         </div>
-        <Button appName="web" className={styles.secondary}>
-          Open alert
-        </Button>
+      </nav>
+
+      {/* Hero */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center">
+        <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 tracking-tight mb-6">
+          Your Bridge from <br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-500">Campus to Career</span>
+        </h1>
+        <p className="text-xl text-slate-600 max-w-2xl mx-auto mb-8">
+          Stop sending resumes into the void. Prove your skills, connect with real mentors, and get hired based on what you can actually do.
+        </p>
+        <div className="flex justify-center gap-4">
+          <Link href="/sign-up" className="flex items-center gap-2 bg-slate-900 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-slate-800 transition-transform hover:scale-105">
+            Join as Student <ArrowRight className="h-5 w-5" />
+          </Link>
+          <Link href="http://localhost:3001" className="flex items-center gap-2 bg-white text-slate-900 border border-slate-200 px-8 py-4 rounded-full font-bold text-lg hover:bg-slate-50 transition-colors">
+            I'm a Recruiter
+          </Link>
+        </div>
+
+        {/* Feature Grid */}
+        <div className="grid md:grid-cols-3 gap-8 mt-20 text-left">
+          <FeatureCard
+            title="Verified Skills"
+            desc="No more keyword stuffing. Pass assessments and get badges that recruiters trust."
+          />
+          <FeatureCard
+            title=" Direct Mentorship"
+            desc="Chat with alumni and seniors who are actually working in your dream roles."
+          />
+          <FeatureCard
+            title="Project Portfolio"
+            desc="Showcase your code, designs, and case studies in a format employers love."
+          />
+        </div>
       </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com/templates?search=turborepo&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://turborepo.com?utm_source=create-turbo"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to turborepo.com →
-        </a>
-      </footer>
+    </div>
+  );
+}
+
+function FeatureCard({ title, desc }: { title: string, desc: string }) {
+  return (
+    <div className="p-6 rounded-2xl bg-slate-50 border border-slate-100 hover:shadow-lg transition-shadow">
+      <div className="h-10 w-10 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+        <CheckCircle className="h-5 w-5 text-blue-600" />
+      </div>
+      <h3 className="font-bold text-lg text-slate-900 mb-2">{title}</h3>
+      <p className="text-slate-600">{desc}</p>
     </div>
   );
 }
