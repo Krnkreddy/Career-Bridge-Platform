@@ -1,9 +1,9 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Briefcase, MapPin, DollarSign } from "lucide-react";
+import ApplyButton from "./ApplyButton";
 
 export default function JobFeed() {
     const [jobs, setJobs] = useState<any[]>([]);
@@ -28,9 +28,12 @@ export default function JobFeed() {
                             <h3 className="font-bold text-lg text-slate-900">{job.title}</h3>
                             <p className="text-slate-600 font-medium">{job.companyName}</p>
                         </div>
-                        <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold">
-                            {job.status}
-                        </span>
+                        <div className="flex items-center gap-2">
+                            <span className="text-xs text-slate-500 font-medium">{job._count?.applications || 0} applicants</span>
+                            <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold">
+                                {job.status}
+                            </span>
+                        </div>
                     </div>
 
                     <div className="flex gap-4 mt-4 text-sm text-slate-500">
@@ -41,7 +44,7 @@ export default function JobFeed() {
                     <p className="mt-4 text-slate-600 line-clamp-2">{job.description}</p>
 
                     <div className="mt-4 pt-4 border-t flex justify-end">
-                        <button className="text-blue-600 font-bold text-sm hover:underline">View Details & Apply →</button>
+                        <ApplyButton jobId={job.id} />
                     </div>
                 </div>
             ))}

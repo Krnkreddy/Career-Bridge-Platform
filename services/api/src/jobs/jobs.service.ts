@@ -52,6 +52,9 @@ export class JobsService {
       include: {
         recruiter: {
           select: { email: true, profile: { select: { fullName: true } } }
+        },
+        _count: {
+          select: { applications: true }
         }
       },
       orderBy: { createdAt: 'desc' },
