@@ -2,7 +2,7 @@
 "use client";
 
 import { useAuth, useUser } from "@clerk/nextjs";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Suspense } from "react";
 import axios from "axios";
 import { io, Socket } from "socket.io-client";
 import { Send, Loader2, ArrowLeft } from "lucide-react";
@@ -23,7 +23,7 @@ type Conversation = {
     messages: Message[];
 };
 
-export default function ChatPage() {
+function ChatContent() {
     const { getToken, userId } = useAuth();
     const searchParams = useSearchParams();
     const convIdParam = searchParams.get('id');
@@ -198,5 +198,13 @@ export default function ChatPage() {
                 )}
             </div>
         </div>
+    );
+}
+
+export default function ChatPage() {
+    return (
+        <Suspense fallback={<div className="h-screen flex items-center justify-center"><Loader2 className="animate-spin" /></div>}>
+            <ChatContent />
+        </Suspense>
     );
 }
